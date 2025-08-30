@@ -190,6 +190,8 @@
 
                     <div id="login-error-message" class="text-red-500 text-sm mb-4 hidden"></div>
                     
+                    <a href="#" id="forgot-password-link" class="text-sm text-blue-600 hover:underline mb-4 inline-block">Forgot Password?</a>
+
                     <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
                         <button id="login-btn" class="w-full bg-blue-600 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-blue-700 transition transform hover:scale-105">
                             Log In
@@ -341,9 +343,130 @@
 
         </div>
     </div>
+    
+    <footer class="mt-8 text-center text-gray-400 text-sm p-4">
+        <p class="mb-2">Built by Team Pirates</p>
+        <p>C. Rajeswar, B. Maateja Naik, P. Haswanth, V. Guru Mohith, M. Pavan</p>
+    </footer>
 
-    <!-- App Script -->
-    <script>
+    <!-- Firebase SDKs and App Script -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Global variables provided by the Canvas environment
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = {
+          apiKey: "AIzaSyAvYfJXNM4R36KJNjmAzXI89u5J-0llZRg",
+          authDomain: "adaptive-learning-ee646.firebaseapp.com",
+          projectId: "adaptive-learning-ee646",
+          storageBucket: "adaptive-learning-ee646.firebasestorage.app",
+          messagingSenderId: "1057323137664",
+          appId: "1:1057323137664:web:9df42948bf4a1b4b4a8465",
+          measurementId: "G-TFR82FFX8Z"
+        };
+        
+        // --- Firebase Initialization and Auth ---
+        let db, auth, userId;
+
+        try {
+            const app = initializeApp(firebaseConfig);
+            db = getFirestore(app);
+            auth = getAuth(app);
+            
+            onAuthStateChanged(auth, async (user) => {
+                if (user) {
+                    userId = user.uid;
+                    console.log("User signed in with ID:", userId);
+                    document.getElementById('user-id-display').textContent = userId;
+                    loadState();
+                } else {
+                    console.log("No user signed in. Showing login screen.");
+                    showScreen('login-screen');
+                }
+            });
+
+        } catch (error) {
+            console.error("Firebase initialization failed:", error);
+            showModal('Error', 'Failed to initialize the app. Check the console for details.');
+        }
+
+        // --- Authentication Functions ---
+        document.getElementById('signup-btn').addEventListener('click', async () => {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            const errorMessageEl = document.getElementById('login-error-message');
+
+            try {
+                await createUserWithEmailAndPassword(auth, email, password);
+                errorMessageEl.classList.add('hidden');
+            } catch (error) {
+                errorMessageEl.textContent = error.message;
+                errorMessageEl.classList.remove('hidden');
+                console.error("Signup error:", error);
+            }
+        });
+
+        document.getElementById('login-btn').addEventListener('click', async () => {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            const errorMessageEl = document.getElementById('login-error-message');
+            
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                errorMessageEl.classList.add('hidden');
+            } catch (error) {
+                errorMessageEl.textContent = error.message;
+                errorMessageEl.classList.remove('hidden');
+                console.error("Login error:", error);
+            }
+        });
+
+        document.getElementById('forgot-password-link').addEventListener('click', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const errorMessageEl = document.getElementById('login-error-message');
+            
+            if (email) {
+                try {
+                    await sendPasswordResetEmail(auth, email);
+                    errorMessageEl.classList.add('hidden');
+                    showModal('Password Reset', 'A password reset link has been sent to your email address.');
+                } catch (error) {
+                    errorMessageEl.textContent = error.message;
+                    errorMessageEl.classList.remove('hidden');
+                    console.error("Password reset error:", error);
+                }
+            } else {
+                errorMessageEl.textContent = "Please enter your email to reset your password.";
+                errorMessageEl.classList.remove('hidden');
+            }
+        });
+
+        document.querySelectorAll('[id^="logout-btn"]').forEach(button => {
+            button.addEventListener('click', async () => {
+                try {
+                    await signOut(auth);
+                    // Clear state and local storage on logout
+                    localStorage.removeItem('appState');
+                    Object.assign(state, {
+                        score: 0,
+                        questionsAskedCount: 0,
+                        difficulty: 'EASY',
+                        learningMaterial: '',
+                        explanation: '',
+                        currentTopic: '',
+                    });
+                    showScreen('login-screen');
+                } catch (error) {
+                    console.error("Logout error:", error);
+                    showModal('Logout Error', 'Failed to log out. Please try again.');
+                }
+            });
+        });
+
+        // --- Application State and UI Management ---
         const state = {
             currentScreen: 'input',
             difficulty: 'EASY',
@@ -361,7 +484,7 @@
         };
 
         function showScreen(screenId) {
-            const screens = ['input-screen', 'topic-screen', 'loading-screen', 'explanation-screen', 'game-screen', 'quiz-results-screen'];
+            const screens = ['login-screen', 'welcome-screen', 'topic-screen', 'loading-screen', 'explanation-screen', 'game-screen', 'quiz-results-screen'];
             screens.forEach(id => {
                 const element = document.getElementById(id);
                 if (element) {
@@ -388,29 +511,63 @@
         document.getElementById('modal-ok-btn').addEventListener('click', hideModal);
 
         // --- Core Application Logic ---
-        function saveState() {
-            localStorage.setItem('appState', JSON.stringify(state));
+        async function saveState() {
+            if (!userId) {
+                console.warn("User ID not available. Skipping state save.");
+                return;
+            }
+            try {
+                const docRef = doc(db, `artifacts/${appId}/users/${userId}/learningProgress`, 'currentSession');
+                await setDoc(docRef, {
+                    difficulty: state.difficulty,
+                    score: state.score,
+                    learningMaterial: state.learningMaterial,
+                    explanation: state.explanation,
+                    currentTopic: state.currentTopic,
+                    learningSpeed: state.learningSpeed,
+                    questionsAskedCount: state.questionsAskedCount,
+                    timestamp: new Date()
+                }, { merge: true });
+                console.log("State saved to Firestore.");
+            } catch (error) {
+                console.error("Error saving state:", error);
+                showModal('Error', 'Failed to save your progress. Please check the console.');
+            }
         }
 
-        function loadState() {
-            const savedState = localStorage.getItem('appState');
-            if (savedState) {
-                Object.assign(state, JSON.parse(savedState));
-                updateUI();
-                
-                if(state.questionsAskedCount >= 10) {
-                    showQuizResults();
-                } else if(state.explanation) {
-                     document.getElementById('explanation-text').innerHTML = state.explanation;
-                     showScreen('explanation-screen');
-                } else if (state.learningMaterial) {
-                     document.getElementById('curriculum-input').value = state.learningMaterial;
-                     showScreen('topic-screen');
+        async function loadState() {
+            if (!userId) {
+                console.warn("User ID not available. Skipping state load.");
+                return;
+            }
+            try {
+                const docRef = doc(db, `artifacts/${appId}/users/${userId}/learningProgress`, 'currentSession');
+                const docSnap = await getDoc(docRef);
+
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    Object.assign(state, data);
+                    console.log("State loaded from Firestore. Resuming session.");
+                    updateUI();
+                    if(state.questionsAskedCount >= 10) {
+                        showQuizResults();
+                    } else if(state.explanation) {
+                        document.getElementById('explanation-text').innerHTML = state.explanation;
+                        showScreen('explanation-screen');
+                    } else if (state.learningMaterial) {
+                        document.getElementById('curriculum-input').value = state.learningMaterial;
+                        showScreen('topic-screen');
+                    } else {
+                        showScreen('welcome-screen');
+                    }
                 } else {
-                    showScreen('input-screen');
+                    console.log("No saved state found. Starting new session.");
+                    showScreen('welcome-screen');
                 }
-            } else {
-                showScreen('input-screen');
+            } catch (error) {
+                console.error("Error loading state:", error);
+                showModal('Error', 'Failed to load your progress. Please check the console.');
+                showScreen('welcome-screen');
             }
         }
         
