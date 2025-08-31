@@ -172,23 +172,174 @@
             background-color: #ffd700; /* Gold */
             transition: width 0.5s ease-in-out;
         }
+
+        /* New styles for the loading bar */
+        .auth-loader {
+            height: 4px;
+            background-color: #3b82f6;
+            width: 0;
+            animation: load 2s linear infinite;
+        }
+        @keyframes load {
+            0% { width: 0; }
+            50% { width: 100%; }
+            100% { width: 0; }
+        }
+        .answer-feedback {
+            display: inline-block;
+            margin-left: 0.5rem;
+            animation: bounceIn 0.5s ease-in-out;
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0); opacity: 0; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); }
+        }
     </style>
 </head>
 <body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen">
-    <div class="container p-6">
+    <div class="box" id="luffy-box" style="display: none;">
+        <div class="neck"></div>
+        <div class="hairbk">
+            <div class="hair9"></div>
+            <div class="hair10"></div>
+            <div class="hair11"></div>
+            <div class="hair12"></div>
+            <div class="hair43"></div>
+        </div>
+        <div class="headback">
+            <div class="head2"></div>
+            <div class="head6"></div>
+            <div class="head3"></div>
+            <div class="head4"></div>
+            <div class="head5"></div>
+            <div class="head1"></div>
+        </div>
+        <div class="cloth">
+            <div class="cloth1"></div>
+            <div class="cloth2"></div>
+            <div class="cloth3"></div>
+            <div class="cloth4"></div>
+        </div>
+        <div class="arm_r">
+            <div class="armr1"></div>
+            <div class="armr2"></div>
+            <div class="armr3"></div>
+            <div class="armr4"></div>
+            <div class="armr5"></div>
+            <div class="armr6"></div>
+            <div class="armr7"></div>
+            <div class="armr8"></div>
+            <div class="armr9"></div>
+            <div class="armr10"></div>
+            <div class="armr11"></div>
+            <div class="armr12"></div>
+        </div>
+        <div class="hat">
+            <div class="hat1"></div>
+            <div class="hat2"></div>
+            <div class="hat3"></div>
+        </div>
+        <div class="arm_l">
+            <div class="arml1"></div>
+            <div class="arml2"></div>
+            <div class="arml3"></div>
+            <div class="arml4"></div>
+            <div class="arml5"></div>
+            <div class="arml7"></div>
+            <div class="arml8"></div>
+            <div class="arml9"></div>
+            <div class="arml10"></div>
+            <div class="arml11"></div>
+            <div class="arml12"></div>
+            <div class="arml13"></div>
+        </div>
+        <div class="hand">
+            <div class="hand1"></div>
+            <div class="hand2"></div>
+            <div class="hand3"></div>
+            <div class="hand4"></div>
+            <div class="hand5"></div>
+            <div class="hand6"></div>
+            <div class="hand7"></div>
+            <div class="hand8"></div>
+            <div class="hand9"></div>
+            <div class="hand10"></div>
+            <div class="hand11"></div>
+            <div class="hand12"></div>
+            <div class="hand13"></div>
+            <div class="hand14"></div>
+            <div class="hand15"></div>
+            <div class="hand16"></div>
+            <div class="hand17"></div>
+            <div class="hand18"></div>
+            <div class="hand19"></div>
+            <div class="hand20"></div>
+            <div class="hand21"></div>
+        </div>
+        <div class="ear"></div>
+        <div class="hair">
+            <div class="hair1"></div>
+            <div class="hair2"></div>
+            <div class="hair3"></div>
+            <div class="hair4"></div>
+            <div class="hair5"></div>
+            <div class="hair6"></div>
+            <div class="hair7"></div>
+            <div class="hair8"></div>
+            <div class="hair13"></div>
+            <div class="hair14"></div>
+            <div class="hair15"></div>
+            <div class="hair16"></div>
+            <div class="hair17"></div>
+            <div class="hair18"></div>
+            <div class="hair19"></div>
+            <div class="hair20"></div>
+            <div class="hair21"></div>
+            <div class="hair22"></div>
+            <div class="hair23"></div>
+            <div class="hair24"></div>
+            <div class="hair25"></div>
+            <div class="hair26"></div>
+            <div class="hair27"></div>
+            <div class="hair28"></div>
+            <div class="hair29"></div>
+            <div class="hair30"></div>
+            <div class="hair31"></div>
+            <div class="hair32"></div>
+            <div class="hair33"></div>
+            <div class="hair34"></div>
+            <div class="hair35"></div>
+            <div class="hair36"></div>
+            <div class="hair37"></div>
+            <div class="hair38"></div>
+            <div class="hair39"></div>
+            <div class="hair40"></div>
+            <div class="hair41"></div>
+            <div class="hair42"></div>
+        </div>
+        <div class="scar"></div>
+        <div class="mouth"></div>
+        <div class="eye"></div>
+    </div><!-- box end -->
+    <div class="container p-6 z-10 relative">
         <!-- Main Content Area -->
         <div id="main-content" class="text-center">
 
             <!-- Login/Signup Screen -->
             <div id="login-screen" class="fade-in">
                 <div class="card p-8 md:p-12 relative overflow-hidden">
+                    <img src="genesis.png" alt="Genesis AI Logo" class="mx-auto mb-8 w-64 h-auto">
                     <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">JOIN THE CREW!</h2>
                     <p class="text-lg text-gray-600 mb-8">Log in or sign up to save your progress and set sail.</p>
                     
+                    <input type="text" id="signup-name" class="w-full p-4 text-gray-700 bg-gray-50 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4" placeholder="Your Name (for Sign Up)">
                     <input type="email" id="login-email" class="w-full p-4 text-gray-700 bg-gray-50 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4" placeholder="Email">
                     <input type="password" id="login-password" class="w-full p-4 text-gray-700 bg-gray-50 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4" placeholder="Password">
 
-                    <div id="login-error-message" class="text-red-500 text-sm mb-4 hidden"></div>
+                    <div id="login-loading-bar" class="w-full h-1 mt-4 rounded-full bg-gray-200 overflow-hidden hidden">
+                        <div class="auth-loader"></div>
+                    </div>
                     
                     <a href="#" id="forgot-password-link" class="text-sm text-blue-600 hover:underline mb-4 inline-block">Forgot Password?</a>
 
@@ -207,17 +358,50 @@
             <div id="welcome-screen" class="hidden fade-in">
                 <div class="card p-8 md:p-12 relative overflow-hidden">
                     <div class="flex justify-between items-center mb-4">
-                        <h1 class="text-4xl md:text-5xl font-bold text-gray-800">Welcome</h1>
+                        <h1 class="text-4xl md:text-5xl font-bold text-gray-800">Welcome, <span id="user-display-name"></span>!</h1>
                         <button id="logout-btn" class="text-gray-600 hover:text-red-500 transition">Log Out</button>
                     </div>
-                    <p class="text-lg text-gray-600 mb-2">Logged in as: <span id="user-id-display" class="font-semibold text-blue-600"></span></p>
+                    <p class="text-lg text-gray-600 mb-2">Logged in as: <span id="user-id-display" class="font-semibold text-blue-600 text-sm"></span></p>
                     <p class="text-lg text-gray-600 mb-8">Your personalized, adaptive learning companion. Upload your material below to get started.</p>
                     <input type="file" id="material-upload" accept=".txt,.md" class="w-full text-gray-700 bg-gray-50 border border-gray-300 rounded-xl p-4 mb-4">
                     <p class="text-sm text-gray-500 mb-4">Or paste your course material here:</p>
                     <textarea id="curriculum-input" class="w-full h-48 p-4 text-gray-700 bg-gray-50 border border-gray-300 rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4" placeholder="Paste your course material here..."></textarea>
-                    <button id="start-btn" class="bg-blue-600 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-blue-700 transition transform hover:scale-105">
-                        Start Learning
-                    </button>
+                    <div class="flex flex-col md:flex-row items-center md:space-x-4 mt-6">
+                        <button id="start-btn" class="w-full bg-blue-600 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-blue-700 transition transform hover:scale-105">
+                            Start Learning
+                        </button>
+                        <button id="view-dashboard-btn" class="w-full mt-4 md:mt-0 bg-gray-600 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-gray-700 transition transform hover:scale-105">
+                            View Dashboard
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Screen -->
+            <div id="dashboard-screen" class="hidden fade-in">
+                <div class="card p-8 md:p-12 relative overflow-hidden">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Your Learning Dashboard</h2>
+                        <button id="dashboard-back-btn" class="text-gray-600 hover:text-red-500 transition">Back</button>
+                    </div>
+                    <p class="text-lg text-gray-600 mb-6">Welcome, <span id="dashboard-display-name" class="font-semibold text-blue-600"></span>! Here is your progress.</p>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white rounded-xl shadow-md">
+                            <thead>
+                                <tr class="w-full bg-gray-200 text-gray-700 uppercase text-sm leading-normal rounded-t-xl">
+                                    <th class="py-3 px-6 text-left rounded-tl-xl">Topic</th>
+                                    <th class="py-3 px-6 text-left">Difficulty</th>
+                                    <th class="py-3 px-6 text-left">Score</th>
+                                    <th class="py-3 px-6 text-left rounded-tr-xl">Date</th>
+                                </tr>
+                            </thead>
+                            <tbody id="quiz-history-body" class="text-gray-600 text-sm font-light">
+                                <!-- Quiz history rows will be inserted here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="no-history-message" class="text-gray-500 text-center mt-8 hidden">You haven't completed any quizzes yet.</div>
                 </div>
             </div>
             
@@ -329,6 +513,22 @@
                     <button id="start-over-btn" class="bg-blue-600 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-blue-700 transition transform hover:scale-105 mt-8">
                         Start a New Topic
                     </button>
+                    <button id="review-quiz-btn" class="bg-blue-600 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-blue-700 transition transform hover:scale-105 mt-4">
+                        Review Quiz
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quiz Review Screen -->
+            <div id="quiz-review-screen" class="hidden fade-in">
+                <div class="card p-8 md:p-12 relative overflow-hidden text-left">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Quiz Review</h2>
+                        <button id="review-back-btn" class="text-gray-600 hover:text-red-500 transition">Back</button>
+                    </div>
+                    <div id="quiz-review-content">
+                        <!-- Review content will be dynamically inserted here -->
+                    </div>
                 </div>
             </div>
 
@@ -353,7 +553,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, setDoc, collection, query, getDocs, addDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // Global variables provided by the Canvas environment
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
@@ -369,6 +569,7 @@
         
         // --- Firebase Initialization and Auth ---
         let db, auth, userId;
+        const luffyBgContainer = document.getElementById('luffy-bg-container');
 
         try {
             const app = initializeApp(firebaseConfig);
@@ -379,7 +580,7 @@
                 if (user) {
                     userId = user.uid;
                     console.log("User signed in with ID:", userId);
-                    document.getElementById('user-id-display').textContent = userId;
+                    await loadProfile();
                     loadState();
                 } else {
                     console.log("No user signed in. Showing login screen.");
@@ -392,55 +593,120 @@
             showModal('Error', 'Failed to initialize the app. Check the console for details.');
         }
 
+        async function loadProfile() {
+            if (!userId) {
+                console.warn("User ID not available. Skipping profile load.");
+                return;
+            }
+            try {
+                const userDocRef = doc(db, `artifacts/${appId}/users/${userId}`, 'profile');
+                const userDocSnap = await getDoc(userDocRef);
+                const displayName = userDocSnap.exists() ? userDocSnap.data().name : 'Fellow Pirate';
+                document.getElementById('user-display-name').textContent = displayName;
+                document.getElementById('dashboard-display-name').textContent = displayName;
+            } catch (e) {
+                console.error("Error fetching user name:", e);
+                document.getElementById('user-display-name').textContent = 'Fellow Pirate';
+                document.getElementById('dashboard-display-name').textContent = 'Fellow Pirate';
+            }
+            document.getElementById('user-id-display').textContent = userId;
+        }
+
+        async function loadDashboard() {
+            if (!userId) {
+                console.warn("User ID not available. Skipping dashboard load.");
+                return;
+            }
+            showScreen('loading-screen');
+            try {
+                const quizHistoryCollectionRef = collection(db, `artifacts/${appId}/users/${userId}/quizHistory`);
+                const q = query(quizHistoryCollectionRef);
+                const querySnapshot = await getDocs(q);
+
+                const quizHistoryBody = document.getElementById('quiz-history-body');
+                quizHistoryBody.innerHTML = '';
+                const noHistoryMessage = document.getElementById('no-history-message');
+                
+                if (querySnapshot.empty) {
+                    noHistoryMessage.classList.remove('hidden');
+                } else {
+                    noHistoryMessage.classList.add('hidden');
+                    querySnapshot.forEach((doc) => {
+                        const data = doc.data();
+                        const date = data.timestamp ? new Date(data.timestamp.seconds * 1000).toLocaleDateString() : 'N/A';
+                        const row = `
+                            <tr class="border-b border-gray-200 hover:bg-gray-100">
+                                <td class="py-3 px-6 text-left whitespace-nowrap">${data.currentTopic || 'N/A'}</td>
+                                <td class="py-3 px-6 text-left">${data.difficulty || 'N/A'}</td>
+                                <td class="py-3 px-6 text-left">${data.score !== undefined ? `${data.score}/10` : 'N/A'}</td>
+                                <td class="py-3 px-6 text-left">${date}</td>
+                            </tr>
+                        `;
+                        quizHistoryBody.innerHTML += row;
+                    });
+                }
+                showScreen('dashboard-screen');
+            } catch (error) {
+                console.error("Error loading dashboard:", error);
+                showModal('Error', 'Failed to load dashboard data. Please try again.');
+                showScreen('welcome-screen');
+            }
+        }
+
         // --- Authentication Functions ---
         document.getElementById('signup-btn').addEventListener('click', async () => {
+            const name = document.getElementById('signup-name').value;
             const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
-            const errorMessageEl = document.getElementById('login-error-message');
+            const loadingBar = document.getElementById('login-loading-bar');
+
+            if (name.trim() === '') {
+                showModal('Input Required', 'Please enter your name.');
+                return;
+            }
 
             try {
-                await createUserWithEmailAndPassword(auth, email, password);
-                errorMessageEl.classList.add('hidden');
+                loadingBar.classList.remove('hidden');
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                await setDoc(doc(db, `artifacts/${appId}/users/${userCredential.user.uid}`, 'profile'), { name: name });
             } catch (error) {
-                errorMessageEl.textContent = error.message;
-                errorMessageEl.classList.remove('hidden');
+                showModal('Signup Failed', error.message);
                 console.error("Signup error:", error);
+            } finally {
+                loadingBar.classList.add('hidden');
             }
         });
 
         document.getElementById('login-btn').addEventListener('click', async () => {
             const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
-            const errorMessageEl = document.getElementById('login-error-message');
-            
+            const loadingBar = document.getElementById('login-loading-bar');
+
             try {
+                loadingBar.classList.remove('hidden');
                 await signInWithEmailAndPassword(auth, email, password);
-                errorMessageEl.classList.add('hidden');
             } catch (error) {
-                errorMessageEl.textContent = error.message;
-                errorMessageEl.classList.remove('hidden');
+                showModal('Login Failed', error.message);
                 console.error("Login error:", error);
+            } finally {
+                loadingBar.classList.add('hidden');
             }
         });
 
         document.getElementById('forgot-password-link').addEventListener('click', async (e) => {
             e.preventDefault();
             const email = document.getElementById('login-email').value;
-            const errorMessageEl = document.getElementById('login-error-message');
             
             if (email) {
                 try {
                     await sendPasswordResetEmail(auth, email);
-                    errorMessageEl.classList.add('hidden');
                     showModal('Password Reset', 'A password reset link has been sent to your email address.');
                 } catch (error) {
-                    errorMessageEl.textContent = error.message;
-                    errorMessageEl.classList.remove('hidden');
+                    showModal('Password Reset Failed', error.message);
                     console.error("Password reset error:", error);
                 }
             } else {
-                errorMessageEl.textContent = "Please enter your email to reset your password.";
-                errorMessageEl.classList.remove('hidden');
+                showModal('Input Required', "Please enter your email to reset your password.");
             }
         });
 
@@ -450,14 +716,7 @@
                     await signOut(auth);
                     // Clear state and local storage on logout
                     localStorage.removeItem('appState');
-                    Object.assign(state, {
-                        score: 0,
-                        questionsAskedCount: 0,
-                        difficulty: 'EASY',
-                        learningMaterial: '',
-                        explanation: '',
-                        currentTopic: '',
-                    });
+                    clearSessionState();
                     showScreen('login-screen');
                 } catch (error) {
                     console.error("Logout error:", error);
@@ -465,6 +724,17 @@
                 }
             });
         });
+
+        function clearSessionState() {
+             Object.assign(state, {
+                score: 0,
+                questionsAskedCount: 0,
+                difficulty: 'EASY',
+                learningMaterial: '',
+                explanation: '',
+                currentTopic: '',
+            });
+        }
 
         // --- Application State and UI Management ---
         const state = {
@@ -477,6 +747,7 @@
             currentTopic: '',
             learningSpeed: 'standard',
             questionsAskedCount: 0,
+            quizHistory: [],
             
             // NOTE: Replace this with your actual API key
             // This is for local development only and should not be made public
@@ -484,7 +755,7 @@
         };
 
         function showScreen(screenId) {
-            const screens = ['login-screen', 'welcome-screen', 'topic-screen', 'loading-screen', 'explanation-screen', 'game-screen', 'quiz-results-screen'];
+            const screens = ['login-screen', 'welcome-screen', 'dashboard-screen', 'topic-screen', 'loading-screen', 'explanation-screen', 'game-screen', 'quiz-results-screen', 'quiz-review-screen'];
             screens.forEach(id => {
                 const element = document.getElementById(id);
                 if (element) {
@@ -496,6 +767,12 @@
                 element.classList.remove('hidden');
             }
             state.currentScreen = screenId;
+            
+            if (screenId === 'login-screen') {
+                luffyBgContainer.style.display = 'none';
+            } else {
+                luffyBgContainer.style.display = 'block';
+            }
         }
 
         function showModal(title, message) {
@@ -535,6 +812,21 @@
             }
         }
 
+        async function saveQuizResult() {
+            if (!userId) return;
+            try {
+                await addDoc(collection(db, `artifacts/${appId}/users/${userId}/quizHistory`), {
+                    currentTopic: state.currentTopic,
+                    difficulty: state.difficulty,
+                    score: state.score,
+                    timestamp: new Date()
+                });
+                console.log("Quiz result saved to Firestore.");
+            } catch (error) {
+                console.error("Error saving quiz result:", error);
+            }
+        }
+
         async function loadState() {
             if (!userId) {
                 console.warn("User ID not available. Skipping state load.");
@@ -566,7 +858,6 @@
                 }
             } catch (error) {
                 console.error("Error loading state:", error);
-                showModal('Error', 'Failed to load your progress. Please check the console.');
                 showScreen('welcome-screen');
             }
         }
@@ -580,34 +871,75 @@
             let html = '<ul class="tree tree-root">';
             let lines = text.split('\n').filter(line => line.trim() !== '');
             let indentStack = [0];
+            let currentIndent = 0;
 
             lines.forEach(line => {
                 let indent = line.search(/\S|$/);
                 let content = line.trim();
+                
+                if (content.length === 0) return;
 
-                if (indent > indentStack[indentStack.length - 1]) {
+                if (indent > currentIndent) {
                     html += '<ul>';
                     indentStack.push(indent);
-                } else if (indent < indentStack[indentStack.length - 1]) {
+                } else if (indent < currentIndent) {
                     while (indent < indentStack[indentStack.length - 1]) {
                         html += '</ul></li>';
                         indentStack.pop();
                     }
-                }
-
-                if (content.length > 0) {
+                    if (indent === indentStack[indentStack.length - 1]) {
+                        html += '</li>';
+                    } else {
+                         html += `<li>${content}`;
+                    }
+                } else {
+                    if (html.endsWith('<li>')) {
+                        html += '</li>';
+                    }
                     html += `<li>${content}`;
                 }
+                currentIndent = indent;
             });
-
             while (indentStack.length > 1) {
                 html += '</ul></li>';
                 indentStack.pop();
             }
             html += '</ul>';
-
             return html;
         }
+
+        function renderJsonTreeStructure(obj) {
+            let html = '<ul class="tree tree-root">';
+            function buildHtml(data) {
+                for (const key in data) {
+                    html += `<li><b>${key}:</b> `;
+                    if (typeof data[key] === 'object' && data[key] !== null) {
+                        if (Array.isArray(data[key])) {
+                            html += '<ul>';
+                            data[key].forEach(item => {
+                                if (typeof item === 'object' && item !== null) {
+                                    buildHtml(item);
+                                } else {
+                                    html += `<li>${item}</li>`;
+                                }
+                            });
+                            html += '</ul>';
+                        } else {
+                            html += '<ul>';
+                            buildHtml(data[key]);
+                            html += '</ul>';
+                        }
+                    } else {
+                        html += `${data[key]}`;
+                    }
+                    html += '</li>';
+                }
+            }
+            buildHtml(obj);
+            html += '</ul>';
+            return html;
+        }
+
 
         async function callGeminiApiWithRetry(payload, retries = 3) {
             const apiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=" + state.apiKey;
@@ -716,13 +1048,16 @@
                 const responseData = await callGeminiApiWithRetry(payload);
                 const data = JSON.parse(responseData);
 
+                const mindMapHtml = typeof data.mind_map === 'object' ? renderJsonTreeStructure(data.mind_map) : renderTreeStructure(data.mind_map);
+                const roadmapHtml = typeof data.roadmap === 'object' ? renderJsonTreeStructure(data.roadmap) : renderTreeStructure(data.roadmap);
+                
                 state.explanation = `
                     <h3 class="text-xl font-bold text-gray-800 mb-2">Explanation</h3>
                     <p class="mb-6">${data.explanation}</p>
                     <h3 class="text-xl font-bold text-gray-800 mb-2">Mind Map</h3>
-                    <div class="bg-gray-100 p-4 rounded-lg text-sm mb-6">${renderTreeStructure(data.mind_map)}</div>
+                    <div class="bg-gray-100 p-4 rounded-lg text-sm mb-6">${mindMapHtml}</div>
                     <h3 class="text-xl font-bold text-gray-800 mb-2">Roadmap</h3>
-                    <div class="bg-gray-100 p-4 rounded-lg text-sm">${renderTreeStructure(data.roadmap)}</div>
+                    <div class="bg-gray-100 p-4 rounded-lg text-sm">${roadmapHtml}</div>
                 `;
                 document.getElementById('explanation-text').innerHTML = state.explanation;
                 saveState();
@@ -920,6 +1255,7 @@
 
         async function showQuizResults() {
             showScreen('quiz-results-screen');
+            saveQuizResult();
             
             const scorePercentage = (state.score / 10) * 100;
             document.getElementById('final-score-text').textContent = `${state.score} / 10`;
@@ -964,17 +1300,13 @@
                 suggestionsEl.appendChild(ul);
             }
 
-            localStorage.removeItem('appState');
-            state.score = 0;
-            state.questionsAskedCount = 0;
-            state.difficulty = 'EASY';
-            state.learningMaterial = '';
-            state.explanation = '';
-            state.currentTopic = '';
+            clearSessionState();
         }
 
         // --- Event Listeners ---
         document.getElementById('start-btn').addEventListener('click', handleMaterialInput);
+        document.getElementById('view-dashboard-btn').addEventListener('click', loadDashboard);
+        document.getElementById('dashboard-back-btn').addEventListener('click', () => { showScreen('welcome-screen'); });
         document.getElementById('get-explanation-btn').addEventListener('click', generateExplanationAndQuiz);
         document.getElementById('start-quiz-btn').addEventListener('click', generateQuizContent);
         document.getElementById('next-btn').addEventListener('click', generateQuizContent);
@@ -983,7 +1315,7 @@
             if (e.key === 'Enter') handleChatbotQuestion();
         });
         document.getElementById('start-over-btn').addEventListener('click', () => {
-            showScreen('input-screen');
+            showScreen('welcome-screen');
         });
 
         window.onload = loadState;
